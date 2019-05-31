@@ -15,7 +15,11 @@ namespace TRansformaciones2D
         int limitep, Escalado, Rotacion;
         int contp=0;
         List<Point> puntos;
-        Pen pen = new Pen(Color.Green, 3);
+        Pen verde = new Pen(Color.Green, 3);
+        Pen rojo = new Pen(Color.Red, 3);
+        Point Max;
+        Point Min;
+        Point Centro;
 
 
         public Form1()
@@ -35,11 +39,12 @@ namespace TRansformaciones2D
             {
                 puntos.Add(new Point(e.X, e.Y));
                 contp++;
-                panel1.CreateGraphics().DrawEllipse(pen,e.X, e.Y, 1,1);
+                panel1.CreateGraphics().DrawEllipse(verde,e.X, e.Y, 1,1);
             }
             if(contp==limitep)
             {
                 DibujarFigura(puntos);
+                GCentro(puntos);
             }
 
         }
@@ -70,14 +75,46 @@ namespace TRansformaciones2D
             {
                 if (i < puntos.Count-1)
                 {
-                    panel1.CreateGraphics().DrawLine(pen, puntos[i], puntos[i + 1]);
+                    panel1.CreateGraphics().DrawLine(verde, puntos[i], puntos[i + 1]);
                 }
                 else
                 {
-                    panel1.CreateGraphics().DrawLine(pen, puntos[i], puntos[0]);
+                    panel1.CreateGraphics().DrawLine(verde, puntos[i], puntos[0]);
                 }
             }
         }
+        void GCentro(List<Point> puntos)
+        {
+            Max = puntos[0];
+            Min = puntos[0];
 
+            for (int i = 0; i < puntos.Count; i++)
+            {
+                if (Max.X < puntos[i].X)
+                {
+                    Max.X = puntos[i].X;
+                }
+                if (Max.Y < puntos[i].Y)
+                {
+                    Max.Y = puntos[i].Y;
+                }
+            }
+
+            for (int i = 0; i < puntos.Count; i++)
+            {
+                if (Min.X > puntos[i].X)
+                {
+                    Min.X = puntos[i].X;
+                }
+                if (Min.Y > puntos[i].Y)
+                {
+                    Min.Y = puntos[i].Y;
+                }
+            }
+            Centro.X = (Max.X + Min.X) / 2;
+            Centro.Y = (Max.Y + Min.Y) / 2;
+
+            panel1.CreateGraphics().DrawEllipse(rojo, Centro.X, Centro.Y, 2, 2);
+        }
     }
 }
