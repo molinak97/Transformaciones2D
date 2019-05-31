@@ -51,7 +51,17 @@ namespace TRansformaciones2D
             }
 
         }
-
+        private void button7_Click(object sender, EventArgs e)//Limpiar
+        {
+            contp = 0;
+            puntos.Clear();
+            panel1.Refresh();
+            comboBox1.Text = "";
+            textBox1.Text = "0";
+            comboBox3.Text = "";
+            textBox1.Text = "0";
+            textBox2.Text = "0";
+        }
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)//CantidadPuntos
         {
             limitep = Convert.ToInt32(comboBox1.Text);
@@ -59,48 +69,59 @@ namespace TRansformaciones2D
             puntos.Clear();
             panel1.Refresh();
         }
-        private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)//Rotacion en grados
+        private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)//Error
         {
-            Grados = Convert.ToInt32(comboBox2.Text);
         }
         private void comboBox3_SelectedIndexChanged(object sender, EventArgs e)//Escalado
         {
             Escalado = Convert.ToInt32(comboBox3.Text);
         }
-        private void button7_Click(object sender, EventArgs e)//Limpiar
-        {
-            contp = 0;
-            puntos.Clear();
-            panel1.Refresh();
-        }
-
         private void button5_Click(object sender, EventArgs e)//Trasladar X,Y Boton
         {
             List<Point> traslacion;
             traslacion = Trasladar(puntos, TrasladadoX,TrasladadoY);
             puntos = traslacion;
         }
-
         private void textBox1_TextChanged(object sender, EventArgs e)//Trasladar X
         {
             TrasladadoX = Convert.ToInt32(textBox1.Text);
         }
-
         private void textBox2_TextChanged(object sender, EventArgs e)//Trasladar Y
         {
             TrasladadoY = Convert.ToInt32(textBox2.Text);
         }
-
-        private void button3_Click(object sender, EventArgs e)
+        private void button3_Click(object sender, EventArgs e)//Proyeccion X
         {
-            ProyeccionX(puntos);
+            List<Point> proyeccionX;
+            proyeccionX = ProyeccionX(puntos);
+            puntos = proyeccionX;
         }
-
-        private void button4_Click(object sender, EventArgs e)
+        private void button4_Click(object sender, EventArgs e)//Proyeccion Y
         {
-            ProyeccionY(puntos);
+            List<Point> proyeccionY;
+            proyeccionY = ProyeccionY(puntos);
+            puntos = proyeccionY;
         }
-
+        private void button2_Click(object sender, EventArgs e)//Escalar
+        {
+            List<Point> centro, escalar, origen;
+            centro = MovCentro(puntos);
+            escalar = Escalar(centro,Escalado);
+            origen = MovOrigen(escalar);
+            puntos = origen;
+        }
+        private void button1_Click(object sender, EventArgs e)//Rotacion
+        {
+            List<Point> centro, rotacion, origen;
+            centro = MovCentro(puntos);
+            rotacion = Rotacion(centro, Grados);
+            origen = MovOrigen(rotacion);
+            puntos = origen;
+        }
+        private void textBox3_TextChanged(object sender, EventArgs e)//Rotacion en grados text.box
+        {
+            Grados = Convert.ToInt32(textBox3.Text);
+        }
         void DibujarFigura(List<Point> puntos)
         {
             for(int i=0 ; i < puntos.Count; i++)
@@ -167,51 +188,35 @@ namespace TRansformaciones2D
 
             return traslacion;
         }
-        void ProyeccionX(List<Point> puntos)
+        public List<Point> ProyeccionX(List<Point> puntos)
         {
             List<Point> proyeccionX = new List<Point>();
-            Point PointP;
-            for (int i = 0; i < puntos.Count; i++)
-            {
-
-                PointP = new Point();
-                PointP.X = (puntos[i].X - ((puntos[i].X - Centro.X) * 2));
-                PointP.Y = puntos[i].Y;
-                proyeccionX.Add(PointP);
-            }
-            panel1.Refresh();
-            DibujarFigura(proyeccionX);
-            //GCentro(proyeccionX);
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-            Escalar(puntos, Escalado);
-        }
-
-        private void button1_Click(object sender, EventArgs e)//Rotacion
-        {
-            List<Point> centro,rotacion,origen;
-            centro = MovCentro(puntos);
-            rotacion = Rotacion(centro,Grados);
-            origen = MovOrigen(rotacion);
-            puntos = origen;
-        }
-
-        void ProyeccionY(List<Point> puntos)
-        {
-            List<Point> proyeccionY = new List<Point>();
             Point PointP;
             for (int i = 0; i < puntos.Count; i++)
             {
                 PointP = new Point();
                 PointP.Y = (puntos[i].Y - ((puntos[i].Y - Centro.Y) * 2));
                 PointP.X = puntos[i].X;
+                proyeccionX.Add(PointP);
+            }
+            panel1.Refresh();
+            DibujarFigura(proyeccionX);
+            return proyeccionX;
+        }
+        public List<Point> ProyeccionY(List<Point> puntos)
+        {
+            List<Point> proyeccionY = new List<Point>();
+            Point PointP;
+            for (int i = 0; i < puntos.Count; i++)
+            {
+                PointP = new Point();
+                PointP.X = (puntos[i].X - ((puntos[i].X - Centro.X) * 2));
+                PointP.Y = puntos[i].Y;
                 proyeccionY.Add(PointP);
             }
             panel1.Refresh();
             DibujarFigura(proyeccionY);
-            //GCentro(proyeccionY);
+            return proyeccionY;
         }
         public List<Point> MovCentro(List<Point> puntos)
         {
@@ -264,23 +269,19 @@ namespace TRansformaciones2D
             DibujarFigura(rotarlp);
             return rotarlp;
         }
-        void Escalar(List<Point> puntos, int Escalado)
+        public List<Point> Escalar(List<Point> puntos, int Escalado)
         {
-            MovCentro(puntos);
             List<Point> escalado = new List<Point>();
             Point PEscalado;
-            //int EscaladoX;
-            //int EscaladoY;
-
-
             for (int i = 0; i < puntos.Count; i++)
             {
                 PEscalado = new Point();
-                PEscalado.X = Math.Abs((puntos[i].X * Escalado) - (Centro.X));
-                PEscalado.Y = Math.Abs((puntos[i].Y * Escalado) - (Centro.Y));
+                PEscalado.X = puntos[i].X * Escalado;
+                PEscalado.Y = puntos[i].Y * Escalado;
                 escalado.Add(PEscalado);
             }
-            DibujarFigura(escalado);     
+            DibujarFigura(escalado);
+            return escalado;
         }
     }
 }
