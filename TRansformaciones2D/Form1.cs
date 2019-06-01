@@ -57,10 +57,10 @@ namespace TRansformaciones2D
             puntos.Clear();
             panel1.Refresh();
             comboBox1.Text = "";
-            textBox1.Text = "0";
             comboBox3.Text = "";
             textBox1.Text = "0";
             textBox2.Text = "0";
+            textBox3.Text = "0";
         }
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)//CantidadPuntos
         {
@@ -81,6 +81,7 @@ namespace TRansformaciones2D
             List<Point> traslacion;
             traslacion = Trasladar(puntos, TrasladadoX,TrasladadoY);
             puntos = traslacion;
+            GCentro(puntos);
         }
         private void textBox1_TextChanged(object sender, EventArgs e)//Trasladar X
         {
@@ -95,12 +96,14 @@ namespace TRansformaciones2D
             List<Point> proyeccionX;
             proyeccionX = ProyeccionX(puntos);
             puntos = proyeccionX;
+            GCentro(puntos);
         }
         private void button4_Click(object sender, EventArgs e)//Proyeccion Y
         {
             List<Point> proyeccionY;
             proyeccionY = ProyeccionY(puntos);
             puntos = proyeccionY;
+            GCentro(puntos);
         }
         private void button2_Click(object sender, EventArgs e)//Escalar
         {
@@ -109,6 +112,7 @@ namespace TRansformaciones2D
             escalar = Escalar(centro,Escalado);
             origen = MovOrigen(escalar);
             puntos = origen;
+            GCentro(puntos);
         }
         private void button1_Click(object sender, EventArgs e)//Rotacion
         {
@@ -117,6 +121,7 @@ namespace TRansformaciones2D
             rotacion = Rotacion(centro, Grados);
             origen = MovOrigen(rotacion);
             puntos = origen;
+            GCentro(puntos);
         }
         private void textBox3_TextChanged(object sender, EventArgs e)//Rotacion en grados text.box
         {
@@ -167,7 +172,7 @@ namespace TRansformaciones2D
             Centro.X = (Max.X + Min.X) / 2;
             Centro.Y = (Max.Y + Min.Y) / 2;
 
-            panel1.CreateGraphics().DrawEllipse(rojo, Centro.X, Centro.Y, 2, 2);         
+            panel1.CreateGraphics().DrawEllipse(rojo, Centro.X, Centro.Y, 1, 1);         
         }
         public List<Point> Trasladar(List<Point> puntos, int tx, int ty)
         {
@@ -184,8 +189,6 @@ namespace TRansformaciones2D
             }
             panel1.Refresh();
             DibujarFigura(traslacion);
-            //GCentro(traslacion);
-
             return traslacion;
         }
         public List<Point> ProyeccionX(List<Point> puntos)

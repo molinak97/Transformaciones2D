@@ -268,7 +268,7 @@
             this.Controls.Add(this.comboBox3);
             this.Controls.Add(this.label4);
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "TRANSFORMACIONES";
             this.ResumeLayout(false);
             this.PerformLayout();
 
