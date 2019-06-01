@@ -85,11 +85,23 @@ namespace TRansformaciones2D
         }
         private void textBox1_TextChanged(object sender, EventArgs e)//Trasladar X
         {
-            TrasladadoX = Convert.ToInt32(textBox1.Text);
+            if (textBox1.Text == "" || textBox1.Text == "-")
+            {
+            }
+            else
+            {
+                TrasladadoX = Convert.ToInt32(textBox1.Text);
+            }
         }
         private void textBox2_TextChanged(object sender, EventArgs e)//Trasladar Y
         {
-            TrasladadoY = Convert.ToInt32(textBox2.Text);
+            if (textBox1.Text == "" || textBox1.Text == "-")
+            {
+            }
+            else
+            {
+                TrasladadoY = Convert.ToInt32(textBox1.Text);
+            }
         }
         private void button3_Click(object sender, EventArgs e)//Proyeccion X
         {
