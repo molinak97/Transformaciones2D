@@ -22,8 +22,6 @@ namespace TRansformaciones2D
         Point Centro;
         double teta = 0;
 
-
-
         public Form1()
         {
             puntos = new List<Point>();
@@ -79,7 +77,38 @@ namespace TRansformaciones2D
         private void button5_Click(object sender, EventArgs e)//Trasladar X,Y Boton
         {
             List<Point> traslacion;
-            traslacion = Trasladar(puntos, TrasladadoX,TrasladadoY);
+            int tx = 0;
+            traslacion = Trasladar(puntos, TrasladadoX, TrasladadoY);
+            if (TrasladadoX < 0)
+            {
+                for (int i = 0; i > TrasladadoX; i--)
+                {
+                    traslacion = Trasladar(puntos, i, 0);
+                    tx = i;
+                }
+            }
+            else
+            {
+                for (int i = 0; i < TrasladadoX; i++)
+                {
+                    traslacion = Trasladar(puntos, i, 0);
+                    tx = i;
+                }
+            }
+            if (TrasladadoY < 0)
+            {
+                for (int j = 0; j < TrasladadoY; j++)
+                {
+                    traslacion = Trasladar(puntos, tx, j);
+                }
+            }
+            else
+            {
+                for (int j = 0; j < TrasladadoY; j++)
+                {
+                    traslacion = Trasladar(puntos, tx, j);
+                }
+            }
             puntos = traslacion;
             GCentro(puntos);
         }
@@ -95,12 +124,12 @@ namespace TRansformaciones2D
         }
         private void textBox2_TextChanged(object sender, EventArgs e)//Trasladar Y
         {
-            if (textBox1.Text == "" || textBox1.Text == "-")
+            if (textBox2.Text == "" || textBox2.Text == "-")
             {
             }
             else
             {
-                TrasladadoY = Convert.ToInt32(textBox1.Text);
+                TrasladadoY = Convert.ToInt32(textBox2.Text);
             }
         }
         private void button3_Click(object sender, EventArgs e)//Proyeccion X
@@ -122,14 +151,23 @@ namespace TRansformaciones2D
             List<Point> centro, escalar, origen;
             centro = MovCentro(puntos);
             escalar = Escalar(centro,Escalado);
+            for (int i = 1; i <= Escalado; i++)
+            {
+                escalar = Escalar(centro, i);
+            }
             origen = MovOrigen(escalar);
             puntos = origen;
             GCentro(puntos);
         }
         private void button1_Click(object sender, EventArgs e)//Rotacion
         {
-            List<Point> centro, rotacion, origen;
+            List<Point> centro, origen;
+            List<Point> rotacion;
             centro = MovCentro(puntos);
+            for (int i = 1; i <= Grados;i++)
+            {
+                rotacion = Rotacion(centro, i);
+            }
             rotacion = Rotacion(centro, Grados);
             origen = MovOrigen(rotacion);
             puntos = origen;
@@ -137,7 +175,13 @@ namespace TRansformaciones2D
         }
         private void textBox3_TextChanged(object sender, EventArgs e)//Rotacion en grados text.box
         {
-            Grados = Convert.ToInt32(textBox3.Text);
+            if (textBox3.Text == "" || textBox3.Text == "-")
+            {
+            }
+            else
+            {
+                Grados = Convert.ToInt32(textBox3.Text);
+            }
         }
         void DibujarFigura(List<Point> puntos)
         {
@@ -272,16 +316,16 @@ namespace TRansformaciones2D
             List<Point> rotarlp = new List<Point>();
             Point PRotar;
             teta = 0;
-
-            for (int i = 0; i < puntos.Count; i++)
-            {
-                PRotar = new Point();
-                teta = (Math.PI * grados) / 180;
-                PRotar.X = (int)((Math.Cos(teta) * puntos[i].X) - (Math.Sin(teta) * puntos[i].Y));
-                PRotar.Y = (int)((Math.Sin(teta) * puntos[i].X) + (Math.Cos(teta) * puntos[i].Y));
-                rotarlp.Add(PRotar);
-            }
-            DibujarFigura(rotarlp);
+                for (int i = 0; i < puntos.Count; i++)
+                {
+                    PRotar = new Point();
+                    teta = (Math.PI * grados) / 180;
+                    PRotar.X = (int)((Math.Cos(teta) * puntos[i].X) - (Math.Sin(teta) * puntos[i].Y));
+                    PRotar.Y = (int)((Math.Sin(teta) * puntos[i].X) + (Math.Cos(teta) * puntos[i].Y));
+                    rotarlp.Add(PRotar);
+                }
+                panel1.Refresh();
+                DibujarFigura(rotarlp);
             return rotarlp;
         }
         public List<Point> Escalar(List<Point> puntos, int Escalado)

@@ -76,9 +76,9 @@
             // 
             // button5
             // 
-            this.button5.Location = new System.Drawing.Point(558, 388);
+            this.button5.Location = new System.Drawing.Point(558, 391);
             this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(66, 53);
+            this.button5.Size = new System.Drawing.Size(67, 53);
             this.button5.TabIndex = 35;
             this.button5.Text = "ACEPTAR";
             this.button5.UseVisualStyleBackColor = true;
@@ -108,7 +108,7 @@
             // 
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(394, 422);
+            this.label7.Location = new System.Drawing.Point(396, 420);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(94, 18);
             this.label7.TabIndex = 32;
