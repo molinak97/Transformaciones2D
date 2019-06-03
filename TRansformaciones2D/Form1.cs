@@ -136,14 +136,14 @@ namespace TRansformaciones2D
         {
             List<Point> proyeccionX;
             proyeccionX = ProyeccionX(puntos);
-            puntos = proyeccionX;
+            //puntos = proyeccionX;
             GCentro(puntos);
         }
         private void button4_Click(object sender, EventArgs e)//Proyeccion Y
         {
             List<Point> proyeccionY;
             proyeccionY = ProyeccionY(puntos);
-            puntos = proyeccionY;
+            //puntos = proyeccionY;
             GCentro(puntos);
         }
         private void button2_Click(object sender, EventArgs e)//Escalar
