@@ -7,12 +7,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Threading;
 
 namespace TRansformaciones2D
 {
     public partial class Form1 : Form
     {
-        int limitep, Escalado, Grados, TrasladadoX, TrasladadoY;
+        int limitep, Grados, TrasladadoX, TrasladadoY;
+        float Escalado;
         int contp=0;
         List<Point> puntos;
         Pen verde = new Pen(Color.Green, 3);
@@ -72,7 +74,7 @@ namespace TRansformaciones2D
         }
         private void comboBox3_SelectedIndexChanged(object sender, EventArgs e)//Escalado
         {
-            Escalado = Convert.ToInt32(comboBox3.Text);
+            Escalado = Convert.ToSingle(comboBox3.Text);//cachar decimales
         }
         private void button5_Click(object sender, EventArgs e)//Trasladar X,Y Boton
         {
@@ -84,6 +86,7 @@ namespace TRansformaciones2D
                 for (int i = 0; i > TrasladadoX; i--)
                 {
                     traslacion = Trasladar(puntos, i, 0);
+                    Thread.Sleep(10);
                     tx = i;
                 }
             }
@@ -92,6 +95,7 @@ namespace TRansformaciones2D
                 for (int i = 0; i < TrasladadoX; i++)
                 {
                     traslacion = Trasladar(puntos, i, 0);
+                    Thread.Sleep(10);
                     tx = i;
                 }
             }
@@ -100,6 +104,7 @@ namespace TRansformaciones2D
                 for (int j = 0; j < TrasladadoY; j++)
                 {
                     traslacion = Trasladar(puntos, tx, j);
+                    Thread.Sleep(10);
                 }
             }
             else
@@ -107,6 +112,7 @@ namespace TRansformaciones2D
                 for (int j = 0; j < TrasladadoY; j++)
                 {
                     traslacion = Trasladar(puntos, tx, j);
+                    Thread.Sleep(10);
                 }
             }
             puntos = traslacion;
@@ -151,10 +157,6 @@ namespace TRansformaciones2D
             List<Point> centro, escalar, origen;
             centro = MovCentro(puntos);
             escalar = Escalar(centro,Escalado);
-            for (int i = 1; i <= Escalado; i++)
-            {
-                escalar = Escalar(centro, i);
-            }
             origen = MovOrigen(escalar);
             puntos = origen;
             GCentro(puntos);
@@ -167,6 +169,7 @@ namespace TRansformaciones2D
             for (int i = 1; i <= Grados;i++)
             {
                 rotacion = Rotacion(centro, i);
+                Thread.Sleep(40);
             }
             rotacion = Rotacion(centro, Grados);
             origen = MovOrigen(rotacion);
@@ -286,11 +289,13 @@ namespace TRansformaciones2D
             for (int i = 0 ; i <= jx ; i++)
             {
                 cerocentro = Trasladar(puntos, -i, 0);
+                Thread.Sleep(10);
                 cx = -i;
             }
             for (int j = 0; j <= jy; j++)
             {
                 cerocentro = Trasladar(puntos, cx, -j);
+                Thread.Sleep(10);
             }
             return cerocentro;
         }
@@ -303,11 +308,13 @@ namespace TRansformaciones2D
             for (int i = 0; i <= Centro.X; i++)
             {
                 origen = Trasladar(puntos, i, 0);
+                Thread.Sleep(10);
                 cx = i;
             }
             for (int j = 0; j <= jy; j++)
             {
                 origen = Trasladar(puntos, cx, j);
+                Thread.Sleep(10);
             }
             return origen;
         }
@@ -328,15 +335,15 @@ namespace TRansformaciones2D
                 DibujarFigura(rotarlp);
             return rotarlp;
         }
-        public List<Point> Escalar(List<Point> puntos, int Escalado)
+        public List<Point> Escalar(List<Point> puntos, float Escalado)
         {
             List<Point> escalado = new List<Point>();
             Point PEscalado;
             for (int i = 0; i < puntos.Count; i++)
             {
                 PEscalado = new Point();
-                PEscalado.X = puntos[i].X * Escalado;
-                PEscalado.Y = puntos[i].Y * Escalado;
+                PEscalado.X = (int)(puntos[i].X * Escalado);
+                PEscalado.Y = (int)(puntos[i].Y * Escalado);
                 escalado.Add(PEscalado);
             }
             DibujarFigura(escalado);

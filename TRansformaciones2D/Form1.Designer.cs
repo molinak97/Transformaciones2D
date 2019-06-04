@@ -76,9 +76,9 @@
             // 
             // button5
             // 
-            this.button5.Location = new System.Drawing.Point(558, 391);
+            this.button5.Location = new System.Drawing.Point(558, 387);
             this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(67, 53);
+            this.button5.Size = new System.Drawing.Size(67, 57);
             this.button5.TabIndex = 35;
             this.button5.Text = "ACEPTAR";
             this.button5.UseVisualStyleBackColor = true;
@@ -148,10 +148,14 @@
             // 
             this.comboBox3.FormattingEnabled = true;
             this.comboBox3.Items.AddRange(new object[] {
+            ".5",
+            "1",
+            "1.5",
             "2",
+            "2.5",
             "3",
-            "4",
-            "5"});
+            "3.5",
+            "4"});
             this.comboBox3.Location = new System.Drawing.Point(216, 392);
             this.comboBox3.Name = "comboBox3";
             this.comboBox3.Size = new System.Drawing.Size(87, 21);
